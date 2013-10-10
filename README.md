@@ -1,6 +1,6 @@
 # bower-json-auth [![Build Status](https://secure.travis-ci.org/h2non/bower-json-auth.png?branch=master)](http://travis-ci.org/h2non/bower-json-auth)
 
-Read `bower.json` files with semantics, normalisation, defaults, validation and authentication (via authrc).
+Read `bower.json` files with semantics, normalisation, defaults, validation and authentication (via [authrc](http://github.com/adesisnetlife/authrc)).
 
 `Note that this is a non-standard forked version for personal purposes!`
 
