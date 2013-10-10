@@ -1,17 +1,24 @@
 {
-  "name": "bower-json",
-  "version": "0.4.0",
-  "description": "Read bower.json files with semantics, normalisation, defaults and validation.",
+  "name": "bower-json-auth",
+  "version": "0.1.0",
+  "description": "Read bower.json files with semantics, normalisation, defaults, validation and authentication (via authrc)",
   "author": "Twitter",
+  "maintainers": [
+    {
+        "name": "Tomas Aparicio",
+        "email": "tomas@aparicio.me",
+        "url": "http://tomas.aparicio.me"
+    }
+  ],
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/bower/json/blob/master/LICENSE"
+      "url": "https://github.com/h2non/bower-json-auth/blob/master/LICENSE"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/bower/json.git"
+    "url": "git://github.com/h2non/bower-json-auth.git"
   },
   "main": "lib/json",
   "engines": {

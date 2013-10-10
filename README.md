@@ -1,7 +1,8 @@
-# bower-json [![Build Status](https://secure.travis-ci.org/bower/json.png?branch=master)](http://travis-ci.org/bower/json)
+# bower-json-auth [![Build Status](https://secure.travis-ci.org/h2non/bower-json-auth.png?branch=master)](http://travis-ci.org/h2non/bower-json-auth)
 
-Read `bower.json` files with semantics, normalisation, defaults and validation.
+Read `bower.json` files with semantics, normalisation, defaults, validation and authentication (via authrc).
 
+`Note that this is a non-standard forked version for personal purposes!`
 
 ## Usage
 
@@ -129,6 +130,10 @@ bowerJson.find('/path/to/folder', function (err, filename) {
     });
 });
 ```
+
+## TODO
+
+* Add test cases for authrc 
 
 
 ## License
