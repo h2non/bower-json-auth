@@ -1,5 +1,6 @@
 var path = require('path');
 var expect = require('expect.js');
+var fs = require('fs');
 var bowerJson = require('../lib/json');
 
 describe('.find', function () {
@@ -189,5 +190,22 @@ describe('.normalize', function () {
 
         bowerJson.normalize(json);
         expect(json.main).to.eql(['foo.js']);
+    });
+});
+
+describe('.auth', function () {
+    it('should match the authentication credetials based on .authrc', function () {
+        var bowerPath = __dirname + '/pkg-bower-json-authrc/bower.json',
+            json = JSON.parse(fs.readFileSync(bowerPath));
+
+        json = bowerJson.auth(bowerPath, json);
+
+        expect(json.dependencies).to.be.a('object');
+        expect(json.dependencies).to.eql({
+          "component": "http://john:unbreakablepassword@git.server.org/component.git#~1.0.0",
+          "anotherComponent": "http://john:unbreakablepassword@git.server.org:8443/another-component.git#~1.0.0",
+          "library": "http://michael:unbreakablepassword@10.0.0.2:8443/library.git#~1.0.0",
+          "custom": "http://user:password@git.server.net/my-repo.git"
+        });
     });
 });

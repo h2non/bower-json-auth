@@ -131,10 +131,9 @@ bowerJson.find('/path/to/folder', function (err, filename) {
 });
 ```
 
-## TODO
+## Maintainer
 
-* Add test cases for authrc 
-
+- [Tomas Aparicio](https://github.com/h2non)
 
 ## License
 

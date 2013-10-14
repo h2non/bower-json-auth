@@ -1,0 +1,10 @@
+{
+    "name": "some-pkg",
+    "version": "0.0.0",
+    "dependencies": {
+        "component": "http://git.server.org/component.git#~1.0.0",
+        "anotherComponent": "http://git.server.org:8443/another-component.git#~1.0.0",
+        "library": "http://10.0.0.2:8443/library.git#~1.0.0",
+        "custom": "http://user:password@git.server.net/my-repo.git"
+    }
+}
