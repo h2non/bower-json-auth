@@ -3,9 +3,9 @@ var expect = require('expect.js');
 var fs = require('fs');
 var bowerJson = require('../lib/json');
 
-describe('.find', function () {
-    it('should find the bower.json file', function (done) {
-        bowerJson.find(__dirname + '/pkg-bower-json', function (err, file) {
+describe('.find', function() {
+    it('should find the bower.json file', function(done) {
+        bowerJson.find(__dirname + '/pkg-bower-json', function(err, file) {
             if (err) {
                 return done(err);
             }
@@ -15,8 +15,8 @@ describe('.find', function () {
         });
     });
 
-    it('should fallback to the component.json file', function (done) {
-        bowerJson.find(__dirname + '/pkg-component-json', function (err, file) {
+    it('should fallback to the component.json file', function(done) {
+        bowerJson.find(__dirname + '/pkg-component-json', function(err, file) {
             if (err) {
                 return done(err);
             }
@@ -26,8 +26,8 @@ describe('.find', function () {
         });
     });
 
-    it('should not fallback to the component.json file if it\'s a component(1) file', function (done) {
-        bowerJson.find(__dirname + '/pkg-component(1)-json', function (err) {
+    it('should not fallback to the component.json file if it\'s a component(1) file', function(done) {
+        bowerJson.find(__dirname + '/pkg-component(1)-json', function(err) {
             expect(err).to.be.an(Error);
             expect(err.code).to.equal('ENOENT');
             expect(err.message).to.equal('None of bower.json, component.json, .bower.json were found in ' + __dirname + '/pkg-component(1)-json');
@@ -35,8 +35,8 @@ describe('.find', function () {
         });
     });
 
-    it('should fallback to the .bower.json file', function (done) {
-        bowerJson.find(__dirname + '/pkg-dot-bower-json', function (err, file) {
+    it('should fallback to the .bower.json file', function(done) {
+        bowerJson.find(__dirname + '/pkg-dot-bower-json', function(err, file) {
             if (err) {
                 return done(err);
             }
@@ -46,8 +46,8 @@ describe('.find', function () {
         });
     });
 
-    it('should error if no component.json / bower.json / .bower.json is found', function (done) {
-        bowerJson.find(__dirname, function (err) {
+    it('should error if no component.json / bower.json / .bower.json is found', function(done) {
+        bowerJson.find(__dirname, function(err) {
             expect(err).to.be.an(Error);
             expect(err.code).to.equal('ENOENT');
             expect(err.message).to.equal('None of bower.json, component.json, .bower.json were found in ' + __dirname);
@@ -56,17 +56,17 @@ describe('.find', function () {
     });
 });
 
-describe('.read', function () {
-    it('should give error if file does not exists', function (done) {
-        bowerJson.read(__dirname + '/willneverexist', function (err) {
+describe('.read', function() {
+    it('should give error if file does not exists', function(done) {
+        bowerJson.read(__dirname + '/willneverexist', function(err) {
             expect(err).to.be.an(Error);
             expect(err.code).to.equal('ENOENT');
             done();
         });
     });
 
-    it('should give error if when reading an invalid json', function (done) {
-        bowerJson.read(__dirname + '/pkg-bower-json-malformed/bower.json', function (err) {
+    it('should give error if when reading an invalid json', function(done) {
+        bowerJson.read(__dirname + '/pkg-bower-json-malformed/bower.json', function(err) {
             expect(err).to.be.an(Error);
             expect(err.code).to.equal('EMALFORMED');
             expect(err.file).to.equal(path.resolve(__dirname + '/pkg-bower-json-malformed/bower.json'));
@@ -74,8 +74,8 @@ describe('.read', function () {
         });
     });
 
-    it('should read the file and give an object', function (done) {
-        bowerJson.read(__dirname + '/pkg-bower-json/bower.json', function (err, json) {
+    it('should read the file and give an object', function(done) {
+        bowerJson.read(__dirname + '/pkg-bower-json/bower.json', function(err, json) {
             if (err) {
                 return done(err);
             }
@@ -88,8 +88,8 @@ describe('.read', function () {
         });
     });
 
-    it('should give the json file that was read', function (done) {
-        bowerJson.read(__dirname + '/pkg-bower-json', function (err, json, file) {
+    it('should give the json file that was read', function(done) {
+        bowerJson.read(__dirname + '/pkg-bower-json', function(err, json, file) {
             if (err) {
                 return done(err);
             }
@@ -100,8 +100,8 @@ describe('.read', function () {
         });
     });
 
-    it('should find for a json file if a directory is given', function (done) {
-        bowerJson.read(__dirname + '/pkg-component-json', function (err, json, file) {
+    it('should find for a json file if a directory is given', function(done) {
+        bowerJson.read(__dirname + '/pkg-component-json', function(err, json, file) {
             if (err) {
                 return done(err);
             }
@@ -114,27 +114,31 @@ describe('.read', function () {
         });
     });
 
-    it('should validate the returned object unless validate is false', function (done) {
-        bowerJson.read(__dirname + '/pkg-bower-json-invalid/bower.json', function (err) {
+    it('should validate the returned object unless validate is false', function(done) {
+        bowerJson.read(__dirname + '/pkg-bower-json-invalid/bower.json', function(err) {
             expect(err).to.be.an(Error);
             expect(err.message).to.contain('name');
             expect(err.file).to.equal(path.resolve(__dirname + '/pkg-bower-json-invalid/bower.json'));
 
-            bowerJson.read(__dirname + '/pkg-bower-json-invalid/bower.json', { validate: false }, function (err) {
+            bowerJson.read(__dirname + '/pkg-bower-json-invalid/bower.json', {
+                validate: false
+            }, function(err) {
                 done(err);
             });
         });
     });
 
-    it('should normalize the returned object if normalize is true', function (done) {
-        bowerJson.read(__dirname + '/pkg-bower-json/bower.json', function (err, json) {
+    it('should normalize the returned object if normalize is true', function(done) {
+        bowerJson.read(__dirname + '/pkg-bower-json/bower.json', function(err, json) {
             if (err) {
                 return done(err);
             }
 
             expect(json.main).to.equal('foo.js');
 
-            bowerJson.read(__dirname + '/pkg-bower-json/bower.json', { normalize: true }, function (err, json) {
+            bowerJson.read(__dirname + '/pkg-bower-json/bower.json', {
+                normalize: true
+            }, function(err, json) {
                 if (err) {
                     return done(err);
                 }
@@ -146,55 +150,71 @@ describe('.read', function () {
     });
 });
 
-describe('.parse', function () {
-    it('should return the same object, unless clone is true', function () {
-        var json = { name: 'foo' };
+describe('.parse', function() {
+    it('should return the same object, unless clone is true', function() {
+        var json = {
+            name: 'foo'
+        };
 
         expect(bowerJson.parse(json)).to.equal(json);
-        expect(bowerJson.parse(json, { clone: true })).to.not.equal(json);
-        expect(bowerJson.parse(json, { clone: true })).to.eql(json);
+        expect(bowerJson.parse(json, {
+            clone: true
+        })).to.not.equal(json);
+        expect(bowerJson.parse(json, {
+            clone: true
+        })).to.eql(json);
     });
 
-    it('should validate the passed object, unless validate is false', function () {
-        expect(function () {
+    it('should validate the passed object, unless validate is false', function() {
+        expect(function() {
             bowerJson.parse({});
         }).to.throwException(/name/);
 
-        expect(function () {
-            bowerJson.parse({}, { validate: false });
+        expect(function() {
+            bowerJson.parse({}, {
+                validate: false
+            });
         }).to.not.throwException();
     });
 
-    it('should not normalize the passed object unless normalize is true', function () {
-        var json = { name: 'foo', main: 'foo.js' };
+    it('should not normalize the passed object unless normalize is true', function() {
+        var json = {
+            name: 'foo',
+            main: 'foo.js'
+        };
 
         bowerJson.parse(json);
         expect(json.main).to.eql('foo.js');
 
-        bowerJson.parse(json, { normalize: true });
+        bowerJson.parse(json, {
+            normalize: true
+        });
         expect(json.main).to.eql(['foo.js']);
     });
 });
 
-describe('.validate', function () {
-    it('should validate the name property', function () {
-        expect(function () {
+describe('.validate', function() {
+    it('should validate the name property', function() {
+        expect(function() {
             bowerJson.validate({});
         }).to.throwException(/name/);
     });
 });
 
-describe('.normalize', function () {
-    it('should normalize the main property', function () {
-        var json = { name: 'foo', main: 'foo.js' };
+describe('.normalize', function() {
+    it('should normalize the main property', function() {
+        var json = {
+            name: 'foo',
+            main: 'foo.js'
+        };
 
         bowerJson.normalize(json);
         expect(json.main).to.eql(['foo.js']);
     });
 });
 
-describe('.auth', function () {
-    it('should match the authentication credetials based on .authrc', function () {
+describe('.auth', function() {
+    it('should match the authentication credetials based on .authrc', function() {
         var bowerPath = __dirname + '/pkg-bower-json-authrc/bower.json',
             json = JSON.parse(fs.readFileSync(bowerPath));
 
@@ -202,10 +222,10 @@ describe('.auth', function () {
 
         expect(json.dependencies).to.be.a('object');
         expect(json.dependencies).to.eql({
-          "component": "http://john:unbreakablepassword@git.server.org/component.git#~1.0.0",
-          "anotherComponent": "http://john:unbreakablepassword@git.server.org:8443/another-component.git#~1.0.0",
-          "library": "http://michael:unbreakablepassword@10.0.0.2:8443/library.git#~1.0.0",
-          "custom": "http://user:password@git.server.net/my-repo.git"
+            "component": "http://john:unbreakablepassword@git.server.org/component.git#~1.0.0",
+            "anotherComponent": "http://john:unbreakablepassword@git.server.org:8443/another-component.git#~1.0.0",
+            "library": "http://michael:unbreakablepassword@10.0.0.2:8443/library.git#~1.0.0",
+            "custom": "http://user:password@git.server.net/my-repo.git"
         });
     });
 });

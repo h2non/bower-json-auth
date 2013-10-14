@@ -58,5 +58,6 @@
     "validthis": false,
 
     "nomen": false,
-    "white": true
+    "white": false,
+    "passfail": true
 }
